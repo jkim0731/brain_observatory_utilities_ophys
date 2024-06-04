@@ -14,7 +14,6 @@ setup(
     install_requires=[
         "flake8",
         "pytest",
-        "allensdk",
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
