@@ -40,7 +40,10 @@ def build_tidy_cell_df(ophys_experiment, exclude_invalid_rois=True):
 
     # query on valid_roi if exclude_invalid_rois == True
     if exclude_invalid_rois:
-        cell_specimen_table = ophys_experiment.cell_specimen_table.query('valid_roi').reset_index()  # noqa E501
+        #cell_specimen_table = ophys_experiment.cell_specimen_table.query('valid_roi').reset_index()  # noqa E501
+        cell_specimen_table = ophys_experiment.cell_specimen_table.copy()
+        cell_specimen_table = cell_specimen_table[cell_specimen_table['valid_roi'] == True].reset_index()  # noqa E501
+        
     else:
         cell_specimen_table = ophys_experiment.cell_specimen_table.reset_index()  # noqa E501
 
