@@ -442,15 +442,16 @@ def event_triggered_response(data, t, y, event_times, t_start=None, t_end=None, 
             data_slice = data_reindexed[y].loc[event_time + t_start: event_time + t_end]  # noqa: E501
 
             assign_nan = False
-            if (len(data_slice) == 0):
-                assign_nan = True
-            if min(abs(data[t].values - event_time)) > tolerance:
-                assign_nan = True
-            else: # need to have at least 2 points on either side to interpolate
-                if len(data_slice[data_slice.index < event_time]) < 2:
+            if tolerance is not None:
+                if (len(data_slice) == 0):
                     assign_nan = True
-                if len(data_slice[data_slice.index > event_time]) < 2:
+                if min(abs(data[t].values - event_time)) > tolerance:
                     assign_nan = True
+                else: # need to have at least 2 points on either side to interpolate
+                    if len(data_slice[data_slice.index < event_time]) < 2:
+                        assign_nan = True
+                    if len(data_slice[data_slice.index > event_time]) < 2:
+                        assign_nan = True
 
             # update our dictionary to have a new key defined as
             # 'event_{EVENT NUMBER}_t={EVENT TIME}' and
